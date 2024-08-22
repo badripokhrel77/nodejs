@@ -1,13 +1,18 @@
-const { noBoolOperatorAliases } = require("sequelize/lib/utils/deprecations")
+// const { noBoolOperatorAliases } = require("sequelize/lib/utils/deprecations")
 
-const {Sequelize,DataType} = require('sequelize')
+const {Sequelize,DataType, DataTypes} = require('sequelize')
+
 const databaseConfig= require('../config/dbConfig')
 
-const sequelize = new Sequelize('databaseConfig.db','databaseConfig.username','databaseConfig.password',{
-    host:'localhost',
-    port: 3306,
-    dialect: 'mysql',
-    OperatorAliases: false,
+const makeBlogTable = require("./blogModel")
+const makeUserTable = require("./userModel")
+
+console.log(process.env.USERNAME)
+const sequelize = new Sequelize(databaseConfig.db,databaseConfig.username,databaseConfig.password,{
+    host : databaseConfig.host, 
+    port : databaseConfig.port, 
+    dialect : databaseConfig.dialect, 
+    operatorsAliases : false, 
     pool:{
     max:5,
     min:0,
@@ -25,6 +30,9 @@ sequelize.authenticate()
 const db={}
 db.Sequelize=Sequelize
 db.sequelize=sequelize
+
+db.blogs= makeBlogTable(sequelize,DataTypes)
+db.users= makeUserTable(sequelize,DataTypes)
 
 db.sequelize.sync({force: false})
 .then(()=>{
