@@ -1,8 +1,10 @@
 //const app=require('express')()
 const express = require('express')
 const app = express()
+ require('dotenv').config()
 
 app.set('view engine','ejs')
+require("./model/index")
 
 const data ={
     name:"Badri",
