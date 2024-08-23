@@ -1,26 +1,27 @@
 //const app=require('express')()
+require('dotenv').config()
 const express = require('express')
+const { blogs } = require('./model/index')
 const app = express()
- require('dotenv').config()
+
+// app.use(express.json{})
+ app.use(express.urlencoded({extended:true}))
 
 app.set('view engine','ejs')
 require("./model/index")
 
-const data ={
-    name:"Badri",
-    religion:"hindu",
-    ph: 222
-}
-app.get('/',(req,res)=>{
-    res.render("home.ejs",{
-        home:data
-    })
+app.get("/create",(req,res)=>{
+    res.render('create.ejs')
 })
-
-
-
-app.get('/about',(req,res)=>{
-    res.render("about.ejs")
+app.post('/create',async(req,res)=>{
+    // const title= req.body.title
+    const {title,subtitle,description}=req.body
+   await blogs.create({
+        title: title,
+        subtitle: subtitle,
+        description: description
+    })
+    res.send("Blog added successfully")
 })
 
 app.use(express.static('public/css/'))

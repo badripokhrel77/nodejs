@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Article</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">My Website</a>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="#">Home</a></li>
+                <li class="nav-item"><a href="#">About</a></li>
+                <li class="nav-item"><a href="#">Services</a></li>
+                <li class="nav-item"><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Form -->
+    <div class="container form-container">
+        <h2 class="form-title">Create Your Article</h2>
+        <form method="post" action="/create">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter title" required>
+            </div>
+            <div class="form-group">
+                <label for="subtitle">Subtitle</label>
+                <input type="text" id="subtitle" name="subtitle"  placeholder="Enter subtitle" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="5" name="description" placeholder="Enter description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Upload Image</label>
+                <input type="file" id="image" accept="image/*">
+                <img id="preview" src="#" alt="Image preview" style="display: none;">
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Image preview
+        document.getElementById('image').addEventListener('change', function(event) {
+            const [file] = this.files;
+            if (file) {
+                document.getElementById('preview').src = URL.createObjectURL(file);
+                document.getElementById('preview').style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
